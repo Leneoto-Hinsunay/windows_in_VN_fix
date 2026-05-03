@@ -1,4 +1,5 @@
 windows_in_VN_fix
+
 Các script và tinh chỉnh nhỏ giúp sửa một số vấn đề thường gặp đối với người dùng Windows tại Việt Nam.
 
 Nội dung
@@ -27,6 +28,7 @@ Repo được tạo nhằm lưu trữ và chia sẻ các script fix nhanh cho ng
 ___________________________________________________________________________________________________
 
 windows_in_VN_fix
+
 Scripts and tweaks to fix some common problems for Windows users in Vietnam.
 
 Contents
