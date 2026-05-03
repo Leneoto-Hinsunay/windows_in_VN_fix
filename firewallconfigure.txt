@@ -1,0 +1,62 @@
+
+Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol -NoRestart
+
+$ports = @(137,138,445,139,135,3389,5985,5986,22,5900,47001,2049,1900,21,25,110,995,143,993,5938,7070,6568,8200,4000,5500,5800,5901,5902,6112,7000,16001)
+
+foreach ($port in $ports) {
+    # TCP Inbound
+    New-NetFirewallRule -DisplayName "SEC_Block_TCP_In_LocalPort_$port" `
+    -Direction Inbound `
+    -Protocol TCP `
+    -LocalPort $port `
+    -Action Block
+
+    # TCP Outbound
+    New-NetFirewallRule -DisplayName "SEC_Block_TCP_Out_LocalPort_$port" `
+    -Direction Outbound `
+    -Protocol TCP `
+    -LocalPort $port `
+    -Action Block
+
+    # UDP Inbound
+    New-NetFirewallRule -DisplayName "SEC_Block_UDP_In_LocalPort_$port" `
+    -Direction Inbound `
+    -Protocol UDP `
+    -LocalPort $port `
+    -Action Block
+
+    # UDP Outbound
+    New-NetFirewallRule -DisplayName "SEC_Block_UDP_Out_LocalPort_$port" `
+    -Direction Outbound `
+    -Protocol UDP `
+    -LocalPort $port `
+    -Action Block
+
+    # TCP Inbound
+    New-NetFirewallRule -DisplayName "SEC_Block_TCP_In_RemotePort_$port" `
+    -Direction Inbound `
+    -Protocol TCP `
+    -RemotePort $port `
+    -Action Block
+
+    # TCP Outbound
+    New-NetFirewallRule -DisplayName "SEC_Block_TCP_Out_RemotePort_$port" `
+    -Direction Outbound `
+    -Protocol TCP `
+    -RemotePort $port `
+    -Action Block
+
+    # UDP Inbound
+    New-NetFirewallRule -DisplayName "SEC_Block_UDP_In_RemotePort_$port" `
+    -Direction Inbound `
+    -Protocol UDP `
+    -RemotePort $port `
+    -Action Block
+
+    # UDP Outbound
+    New-NetFirewallRule -DisplayName "SEC_Block_UDP_Out_RemotePort_$port" `
+    -Direction Outbound `
+    -Protocol UDP `
+    -RemotePort $port `
+    -Action Block
+}
