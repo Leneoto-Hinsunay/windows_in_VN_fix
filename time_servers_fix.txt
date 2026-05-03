@@ -1,0 +1,4 @@
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers" /v 3 /t REG_SZ /d "time.cloudflare.com" /f
+
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers" /v 4 /t REG_SZ /d "time.google.com" /f
+
