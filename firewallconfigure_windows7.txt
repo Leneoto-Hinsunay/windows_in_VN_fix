@@ -1,0 +1,33 @@
+# Windows 7
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" `
+-Name SMB1 -Value 0 -Force
+
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
+-Name "fDenyTSConnections" -Value 1
+
+$ports = @(137,138,445,139,135,3389,5985,5986,22,5900,47001,2049,1900,21,25,110,995,143,993,5938,7070,6568,8200,4000,5500,5800,5901,5902,6112,7000,16001)
+
+foreach ($port in $ports) {
+
+    # LocalPort
+    cmd /c "netsh advfirewall firewall add rule name=SEC_Block_TCP_LocalPort_In_$port dir=in action=block protocol=TCP localport=$port"
+
+    cmd /c "netsh advfirewall firewall add rule name=SEC_Block_TCP_LocalPort_Out_$port dir=out action=block protocol=TCP localport=$port"
+
+    cmd /c "netsh advfirewall firewall add rule name=SEC_Block_UDP_LocalPort_In_$port dir=in action=block protocol=UDP localport=$port"
+
+    cmd /c "netsh advfirewall firewall add rule name=SEC_Block_UDP_LocalPort_Out_$port dir=out action=block protocol=UDP localport=$port"
+
+    # RemotePort
+    cmd /c "netsh advfirewall firewall add rule name=SEC_Block_TCP_RemotePort_In_$port dir=in action=block protocol=TCP remoteport=$port"
+
+    cmd /c "netsh advfirewall firewall add rule name=SEC_Block_TCP_RemotePort_Out_$port dir=out action=block protocol=TCP remoteport=$port"
+
+    cmd /c "netsh advfirewall firewall add rule name=SEC_Block_UDP_RemotePort_In_$port dir=in action=block protocol=UDP remoteport=$port"
+
+    cmd /c "netsh advfirewall firewall add rule name=SEC_Block_UDP_RemotePort_Out_$port dir=out action=block protocol=UDP remoteport=$port"
+}
+
+#EMERGENCY-RESET#
+
+cmd /c "netsh advfirewall reset"
